@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -9,13 +10,15 @@ namespace Server
 {
     class Program
     {
+        
         private static TcpListener listener;
-        private static List<Client> clients = new List<Client>();
+        private static EventList<Client> clients = new EventList<Client>();
 
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Server!");
             listener = new TcpListener(IPAddress.Any, 7777);
+            clients.OnChange += new EventHandler(Clients_OnChange);
             listener.Start();
             listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
 
@@ -60,8 +63,36 @@ namespace Server
                                    new JObject(
                                        new JProperty("username", c.UserName), 
                                        new JProperty("color", c.UserColor.ToArgb())))));
-            Console.WriteLine(json.ToString());
             Broadcast(packet + json.ToString());
         }
+
+        private static void Clients_OnChange(object sender, EventArgs e)
+        {
+            WriteUsernames();
+        }
     }
+    #region Class EventList
+    class EventList<T> : List<T>
+    {
+        public event EventHandler OnChange;
+
+        public new void Add(T item)
+        {
+            base.Add(item);
+            if (null != OnChange)
+            {
+                OnChange(this, null);
+            }
+        }
+
+        public new void Remove(T item)
+        {
+            base.Remove(item);
+            if (null != OnChange)
+            {
+                OnChange(this, null);
+            }
+        }
+    }
+    #endregion
 }

@@ -51,7 +51,6 @@ namespace Server
                     this.UserColor = Color.FromArgb(int.Parse(packetData[2]));
                     Console.WriteLine($"User {this.UserName} is connected");
                     Write("connect\r\nok");
-                    Program.WriteUsernames();
                     break;
                 default:
                     Console.WriteLine("Did not understand: " + packetData[0]);
