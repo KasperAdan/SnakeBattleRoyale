@@ -63,14 +63,29 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startscherm.cs">
+    <Compile Include="Scorescherm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Startscherm.Designer.cs">
-      <DependentUpon>Startscherm.cs</DependentUpon>
+    <Compile Include="Scorescherm.Designer.cs">
+      <DependentUpon>Scorescherm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settingscherm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settingscherm.Designer.cs">
+      <DependentUpon>Settingscherm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lobbyscherm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lobbyscherm.Designer.cs">
+      <DependentUpon>Lobbyscherm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Beginscherm.resx">
       <DependentUpon>Beginscherm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gamescherm.resx">
+      <DependentUpon>Gamescherm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -82,8 +97,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Startscherm.resx">
-      <DependentUpon>Startscherm.cs</DependentUpon>
+    <EmbeddedResource Include="Scorescherm.resx">
+      <DependentUpon>Scorescherm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settingscherm.resx">
+      <DependentUpon>Settingscherm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lobbyscherm.resx">
+      <DependentUpon>Lobbyscherm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -104,6 +125,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\snake-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download %284%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\85-857091_png-file-settings-icon-transparent-png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
