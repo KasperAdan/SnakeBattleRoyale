@@ -26,5 +26,6 @@ namespace SnakeBattleRoyal
             frm.Show();
             this.Hide();
         }
+
     }
 }
