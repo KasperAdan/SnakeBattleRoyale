@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace SnakeBattleRoyal
 {
-    public partial class Form1 : Form
+    public partial class Beginscherm : Form
     {
-        public Form1()
+        public Beginscherm()
         {
             InitializeComponent();
+        }
+
+        private void connectButton_Click(object sender, EventArgs e)
+        {
+            var frm = new Startscherm();
+            frm.Location = this.Location;
+            frm.StartPosition = FormStartPosition.Manual;
+            frm.FormClosing += delegate { this.Show(); };
+            frm.Show();
+            this.Hide();
         }
     }
 }
