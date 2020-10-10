@@ -19,13 +19,11 @@ namespace SnakeBattleRoyal
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            var frm = new Startscherm();
-            frm.Location = this.Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
-            frm.Show();
             this.Hide();
-        }
+            var form2 = new Startscherm();
+            form2.Closed += (s, args) => this.Close();
+            form2.Show();
 
+        }
     }
 }
