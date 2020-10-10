@@ -15,15 +15,15 @@ namespace SnakeBattleRoyal
         public Beginscherm()
         {
             InitializeComponent();
-        }
-
-        private void connectButton_Click(object sender, EventArgs e)
+        }
+
+        private void connectButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            var form2 = new Startscherm();
-            form2.Closed += (s, args) => this.Close();
-            form2.Show();
-
-        }
-    }
+            this.Hide();
+            var form2 = new Startscherm();
+            form2.Closed += (s, args) => this.Close();
+            form2.Show();
+
+        }
+    }
 }
