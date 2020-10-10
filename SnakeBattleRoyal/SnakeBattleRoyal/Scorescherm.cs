@@ -10,14 +10,11 @@ using System.Windows.Forms;
 
 namespace SnakeBattleRoyal
 {
-    public partial class Gamescherm : Form
+    public partial class Scorescherm : Form
     {
-        public Gamescherm()
+        public Scorescherm()
         {
             InitializeComponent();
-            int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
-            int screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
-            this.Size = new System.Drawing.Size(screenWidth, screenHeight);
         }
     }
 }

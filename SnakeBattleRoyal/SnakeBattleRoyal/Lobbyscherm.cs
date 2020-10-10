@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SnakeBattleRoyal
 {
-    public partial class Startscherm : Form
+    public partial class Lobbyscherm : Form
     {
-        public Startscherm()
+        public Lobbyscherm()
         {
             InitializeComponent();
         }
