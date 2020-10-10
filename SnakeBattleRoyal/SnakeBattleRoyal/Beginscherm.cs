@@ -19,7 +19,7 @@ namespace SnakeBattleRoyal
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            var frm = new Startscherm();
+            var frm = new Startscherm(ipHost.Text, portHost.Text, namePlayer.Text);
             frm.Location = this.Location;
             frm.StartPosition = FormStartPosition.Manual;
             frm.FormClosing += delegate { this.Show(); };
