@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -10,6 +11,8 @@ namespace Server
     class Client
     {
         public string UserName { get; set; }
+
+        public Color UserColor { get; set; }
 
         private TcpClient tcpClient;
         private NetworkStream stream;
@@ -45,8 +48,10 @@ namespace Server
             {
                 case "connect":
                     this.UserName = packetData[1];
+                    this.UserColor = Color.FromArgb(int.Parse(packetData[2]));
                     Console.WriteLine($"User {this.UserName} is connected");
                     Write("connect\r\nok");
+                    Program.WriteUsernames();
                     break;
                 default:
                     Console.WriteLine("Did not understand: " + packetData[0]);
@@ -54,7 +59,7 @@ namespace Server
             }
         }
 
-        private void Write(string data)
+        public void Write(string data)
         {
             var dataAsBytes = Encoding.ASCII.GetBytes(data + "\r\n\r\n");
             stream.Write(dataAsBytes, 0, dataAsBytes.Length);

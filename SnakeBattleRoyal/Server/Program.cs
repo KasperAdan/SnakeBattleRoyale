@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 
@@ -38,6 +40,28 @@ namespace Server
         {
             clients.Remove(client);
             Console.WriteLine("Client disconnected");
+        }
+
+        internal static void Broadcast(string packet)
+        {
+            foreach (var client in clients)
+            {
+                client.Write(packet);
+            }
+        }
+
+        internal static void WriteUsernames()
+        {
+            string packet = "users\r\n";
+            JObject json =
+                new JObject(
+                    new JProperty("data", 
+                        new JArray(from c in clients select 
+                                   new JObject(
+                                       new JProperty("username", c.UserName), 
+                                       new JProperty("color", c.UserColor.ToArgb())))));
+            Console.WriteLine(json.ToString());
+            Broadcast(packet + json.ToString());
         }
     }
 }

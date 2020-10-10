@@ -41,18 +41,20 @@
             // namePlayer
             // 
             this.namePlayer.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.namePlayer.Location = new System.Drawing.Point(341, 219);
+            this.namePlayer.Location = new System.Drawing.Point(455, 270);
+            this.namePlayer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.namePlayer.Name = "namePlayer";
-            this.namePlayer.Size = new System.Drawing.Size(128, 20);
+            this.namePlayer.Size = new System.Drawing.Size(169, 22);
             this.namePlayer.TabIndex = 0;
             this.namePlayer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ipHost
             // 
             this.ipHost.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ipHost.Location = new System.Drawing.Point(341, 245);
+            this.ipHost.Location = new System.Drawing.Point(455, 302);
+            this.ipHost.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ipHost.Name = "ipHost";
-            this.ipHost.Size = new System.Drawing.Size(128, 20);
+            this.ipHost.Size = new System.Drawing.Size(169, 22);
             this.ipHost.TabIndex = 1;
             this.ipHost.Text = "localhost";
             this.ipHost.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -60,10 +62,11 @@
             // portHost
             // 
             this.portHost.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.portHost.Location = new System.Drawing.Point(341, 271);
+            this.portHost.Location = new System.Drawing.Point(455, 334);
+            this.portHost.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.portHost.Name = "portHost";
             this.portHost.ReadOnly = true;
-            this.portHost.Size = new System.Drawing.Size(128, 20);
+            this.portHost.Size = new System.Drawing.Size(169, 22);
             this.portHost.TabIndex = 2;
             this.portHost.Text = "7777";
             this.portHost.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -71,9 +74,10 @@
             // connectButton
             // 
             this.connectButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.connectButton.Location = new System.Drawing.Point(341, 297);
+            this.connectButton.Location = new System.Drawing.Point(455, 366);
+            this.connectButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(128, 23);
+            this.connectButton.Size = new System.Drawing.Size(171, 28);
             this.connectButton.TabIndex = 3;
             this.connectButton.Text = "Connect";
             this.connectButton.UseVisualStyleBackColor = false;
@@ -83,18 +87,19 @@
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.Image = global::SnakeBattleRoyal.Properties.Resources.snake_icon;
-            this.pictureBox1.Location = new System.Drawing.Point(341, 85);
+            this.pictureBox1.Location = new System.Drawing.Point(455, 105);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(128, 128);
+            this.pictureBox1.Size = new System.Drawing.Size(171, 158);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
             // Beginscherm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.ipHost);
@@ -102,6 +107,7 @@
             this.Controls.Add(this.namePlayer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Beginscherm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Beginscherm";

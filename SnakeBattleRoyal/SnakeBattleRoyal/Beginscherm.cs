@@ -17,13 +17,12 @@ namespace SnakeBattleRoyal
             InitializeComponent();
         }
 
-        private void connectButton_Click(object sender, EventArgs e)
+        private void connectButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            var form2 = new Startscherm(ipHost.Text, portHost.Text, namePlayer.Text);
-            form2.Closed += (s, args) => this.Close();
+            this.Hide();
+            var form2 = new Startscherm(ipHost.Text, portHost.Text, namePlayer.Text);
+            form2.Closed += (s, args) => this.Close();
             form2.Show();
-
-        }
-    }
+        }
+    }
 }

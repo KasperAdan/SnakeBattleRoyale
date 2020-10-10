@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,6 +18,7 @@ namespace SnakeBattleRoyal
     public partial class Startscherm : Form
     {
         private string username;
+        private Color userColor = Color.Blue;
 
         private TcpClient client;
         private NetworkStream stream;
@@ -28,7 +30,7 @@ namespace SnakeBattleRoyal
             InitializeComponent();
             this.username = username;
             this.client = new TcpClient();
-            client.BeginConnect(ip, int.Parse(poort), new AsyncCallback(OnConnect), null);
+            client.BeginConnect(IPAddress.Parse(ip), int.Parse(poort), new AsyncCallback(OnConnect), null);
 
         }
 
@@ -38,7 +40,7 @@ namespace SnakeBattleRoyal
             client.EndConnect(ar);
             stream = client.GetStream();
             stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
-            Write($"connect\r\n{username}");
+            Write($"connect\r\n{username}\r\n{userColor.ToArgb()}");
 
         }
 
@@ -67,7 +69,7 @@ namespace SnakeBattleRoyal
 
         private static void HandleData(string[] packetData)
         {
-            //Console.WriteLine($"Packet ontvangen: {packetData[0]}");
+            Debug.WriteLine($"Packet ontvangen: {packetData[0]}");
 
             switch (packetData[0])
             {
@@ -79,6 +81,8 @@ namespace SnakeBattleRoyal
                     else
                         Debug.WriteLine(packetData[1]);
                     break;
+                case "users":
+                    //update users 
                 default:
                     Debug.WriteLine("Did not understand: " + packetData[0]);
                     break;
@@ -86,7 +90,7 @@ namespace SnakeBattleRoyal
         }
 
         private void playButton_Click(object sender, EventArgs e)
-        {
+        { 
             this.Hide();
             var form2 = new Gamescherm();
             form2.Closed += (s, args) => this.Close();
