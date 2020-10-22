@@ -23,49 +23,74 @@ namespace SharedMap
             this.color = color;
         }
 
-        internal void Update()
+        internal void Update(Tiles[,] map)
         {
-            List<Vector2> newBody = new List<Vector2>();
+            int newHeadX = (int)body[0].X;
+            int newHeadY = (int)body[0].Y;
             switch (direction)
             {
                 case Direction.UP:
-                    newBody.Add(new Vector2(body[0].X-1, body[0].Y));
-                    for (int i = 0; i < body.Count-1; i++)
-                    {
-                        newBody.Add(body[i]);
-                    }
+                    newHeadX = (int)body[0].X - 1;
                     break;
                 case Direction.RIGHT:
-                    newBody.Add(new Vector2(body[0].X, body[0].Y+1));
-                    for (int i = 0; i < body.Count - 1; i++)
-                    {
-                        newBody.Add(body[i]);
-                    }
+                    newHeadY = (int)body[0].Y + 1;
                     break;
                 case Direction.DOWN:
-                    newBody.Add(new Vector2(body[0].X + 1, body[0].Y));
-                    for (int i = 0; i < body.Count - 1; i++)
-                    {
-                        newBody.Add(body[i]);
-                    }
+                    newHeadX = (int)body[0].X + 1;
                     break;
                 case Direction.LEFT:
-                    newBody.Add(new Vector2(body[0].X, body[0].Y - 1));
-                    for (int i = 0; i < body.Count - 1; i++)
-                    {
-                        newBody.Add(body[i]);
-                    }
+                    newHeadY = (int)body[0].Y - 1;
                     break;
                 case Direction.NONE:
                     break;
             }
-            if (newBody[0].X < 0 || newBody[0].X > MapData.COLUMNS || newBody[0].Y < 0 || newBody[0].Y > MapData.ROWS)
+
+            if (newHeadX < 0 || newHeadX > MapData.COLUMNS || newHeadY < 0 || newHeadY > MapData.ROWS)
             {
                 alive = false;
             }
             else
             {
-                body = newBody;
+                Tiles newTile = map[newHeadX, newHeadY];
+                List<Vector2> newBody = new List<Vector2>();
+
+                switch (newTile)
+                {
+                    case Tiles.Empty:
+                        newBody.Add(new Vector2(newHeadX, newHeadY));
+                        for (int i = 0; i < body.Count-2; i++)
+                        {
+                            newBody.Add(new Vector2(body[i].X, body[i].Y));
+                        }
+                        break;
+                    case Tiles.HeadPlayer1:
+                    case Tiles.HeadPlayer2:
+                    case Tiles.HeadPlayer3:
+                    case Tiles.HeadPlayer4:
+                    case Tiles.HeadPlayer5:
+                    case Tiles.HeadPlayer6:
+                    case Tiles.HeadPlayer7:
+                    case Tiles.HeadPlayer8:
+                        this.alive = false;
+                        break;
+                    case Tiles.BodyPlayer1:
+                    case Tiles.BodyPlayer2:
+                    case Tiles.BodyPlayer3:
+                    case Tiles.BodyPlayer4:
+                    case Tiles.BodyPlayer5:
+                    case Tiles.BodyPlayer6:
+                    case Tiles.BodyPlayer7:
+                    case Tiles.BodyPlayer8:
+                        this.alive = false;
+                        break;
+                    case Tiles.Apple:
+                        newBody.Add(new Vector2(newHeadX, newHeadY));
+                        for (int i = 0; i < body.Count - 1; i++)
+                        {
+                            newBody.Add(new Vector2(body[i].X, body[i].Y));
+                        }
+                        break;
+                }
             }
         }
     }

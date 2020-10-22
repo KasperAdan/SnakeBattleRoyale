@@ -42,18 +42,27 @@ namespace SharedMap
             Map = JsonConvert.DeserializeObject<Tiles[,]>(json);
         }
 
+        public void UpdateDirection(string playerName, Direction newDirection)
+        {
+            foreach (Snake snake in Snakes)
+            {
+                if (snake.name == playerName)
+                {
+                    snake.direction = newDirection;
+                }
+            }
+        }
+
         public void UpdateSnakes()
         {
             foreach (var snake in Snakes)
             {
-                snake.Update();
+                snake.Update(Map);
             }
         }
 
-        private void UpdateMap()
+        public void UpdateMap()
         {
-            //check for collision 
-
             //Clear map
             for (int i = 0; i < ROWS; i++)
             {
@@ -63,6 +72,7 @@ namespace SharedMap
                 }
             }
 
+            //fill map
             for (int j = 0; j < Snakes.Count(); j++)
             {
                 Snake snake = Snakes[j];
@@ -82,8 +92,6 @@ namespace SharedMap
                 }
             }
         }
-
-
 
         public string GetMapJson()
         {

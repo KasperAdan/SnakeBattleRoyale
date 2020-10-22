@@ -65,7 +65,7 @@ namespace SnakeBattleRoyal
             stream.Flush();
         }
 
-        private static void HandleData(string[] packetData)
+        private void HandleData(string[] packetData)
         {
             Debug.WriteLine($"Packet ontvangen: {packetData[0]}");
 
@@ -90,18 +90,23 @@ namespace SnakeBattleRoyal
                     }
                     break;
                 //update users 
+                case "gamestart":
+                    this.Hide();
+                    stream.Close();
+                    var form2 = new Gamescherm(username, userColor, client, stream);
+                    form2.Closed += (s, args) => this.Close();
+                    form2.Show();
+                    break;
                 default:
                     Debug.WriteLine("Did not understand: " + packetData[0]);
                     break;
             }
         }
 
-        private void playButton_Click(object sender, EventArgs e)
+        private void PlayButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            var form2 = new Gamescherm();
-            form2.Closed += (s, args) => this.Close();
-            form2.Show();
+            Write("ready");
+            playButton.Enabled = false;
         }
     }
 }

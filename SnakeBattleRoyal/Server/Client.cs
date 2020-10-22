@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedMap;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -14,6 +15,7 @@ namespace Server
 
         public Color UserColor { get; set; }
 
+        public bool ready = false;
         private TcpClient tcpClient;
         private NetworkStream stream;
         private byte[] buffer = new byte[1024];
@@ -44,6 +46,7 @@ namespace Server
 
         private void HandleData(string[] packetData)
         {
+            Console.WriteLine($"{UserName}: {packetData[0]}");
             switch (packetData[0])
             {
                 case "connect":
@@ -51,7 +54,14 @@ namespace Server
                     this.UserColor = Color.FromArgb(int.Parse(packetData[2]));
                     Console.WriteLine($"User {this.UserName} is connected");
                     Write("connect\r\nok");
-                    break;  
+                    break;
+                case "ready":
+                    this.ready = true;
+                    Program.InitilizeGame();
+                    break;
+                case "keypress":
+                    Program.Map.UpdateDirection(UserName, (Direction)Enum.Parse(typeof(Direction), packetData[1]));
+                    break;
                 default:
                     Console.WriteLine("Did not understand: " + packetData[0]);
                     break;

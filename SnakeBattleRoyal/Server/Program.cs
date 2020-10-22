@@ -7,25 +7,31 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Timers;
 
 namespace Server
 {
     class Program
     {
         
-        private static TcpListener listener;
-        private static EventList<Client> clients = new EventList<Client>();
-        private static MapData Map;
+        private static TcpListener Listener;
+        private static EventList<Client> Clients = new EventList<Client>();
+        public static MapData Map;
+        private static Timer GameTimer;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Server!");
-            listener = new TcpListener(IPAddress.Any, 7777);
-            clients.OnChange += new EventHandler(Clients_OnChange);
-            listener.Start();
-            listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+            Listener = new TcpListener(IPAddress.Any, 7777);
+            Clients.OnChange += new EventHandler(Clients_OnChange);
+            Listener.Start();
+            Listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
 
-            InitilizeGame();
+            GameTimer = new Timer();
+            GameTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            // Set the Interval to 500 millisecond. (Time is set in Milliseconds)
+            GameTimer.Interval = 500;
+            GameTimer.Enabled = false;
 
             Console.ReadLine();
 
@@ -35,24 +41,32 @@ namespace Server
             }
         }
 
+        private static void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            Map.UpdateSnakes();
+            Map.UpdateMap();
+            string json = Map.GetMapJson();
+            Broadcast($"map\r\n{json}");
+        }
+
         private static void OnConnect(IAsyncResult ar)
         {
-            var tcpClient = listener.EndAcceptTcpClient(ar);
+            var tcpClient = Listener.EndAcceptTcpClient(ar);
             Console.WriteLine($"Client connected from {tcpClient.Client.RemoteEndPoint}");
             //check if the client already excists
-            clients.Add(new Client(tcpClient));
-            listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+            Clients.Add(new Client(tcpClient));
+            Listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
         }
 
         internal static void Disconnect(Client client)
         {
-            clients.Remove(client);
+            Clients.Remove(client);
             Console.WriteLine("Client disconnected");
         }
 
         internal static void Broadcast(string packet)
         {
-            foreach (var client in clients)
+            foreach (var client in Clients)
             {
                 client.Write(packet);
             }
@@ -63,14 +77,19 @@ namespace Server
             string packet = "users\r\n";
             JObject json =
                 new JObject(
-                    new JProperty("userAmount", clients.Count()),
+                    new JProperty("userAmount", Clients.Count()),
                     new JProperty("data", 
-                        new JArray(from c in clients select 
+                        new JArray(from c in Clients select 
                                    new JObject(
                                        new JProperty("username", c.UserName), 
                                        new JProperty("color", c.UserColor.ToArgb())))));
             string jsonString = json.ToString(Newtonsoft.Json.Formatting.None);
             Broadcast(packet + jsonString);
+        }
+
+        internal static void WriteGameStart()
+        {
+            Broadcast("gamestart");
         }
 
         private static void Clients_OnChange(object sender, EventArgs e)
@@ -80,22 +99,28 @@ namespace Server
 
         internal static void InitilizeGame()
         {
-            //string[] names = new string[clients.Count];
-            //for (int i = 0; i < clients.Count; i++)
-            //{
-            //    names[i] = clients[i].UserName;
-            //}
-            //Color[] colors = new Color[clients.Count];
-            //for (int i = 0; i < clients.Count; i++)
-            //{
-            //    colors[i] = clients[i].UserColor;
-            //}
-            string[] names = new string[] { "Kasper", "Daphne", "Lucas", "Leslie"};
-            Color[] colors = new Color[] { Color.Blue, Color.Gold, Color.Gold, Color.Gold };
-            Map = new MapData(names, colors);
+            foreach (var client in Clients)
+            {
+                if (!client.ready)
+                {
+                    return;
+                }
+            }
 
-            Map = new MapData(Map.GetMapJson());
-            Map.PrintMap();
+            WriteGameStart();
+
+            string[] names = new string[Clients.Count];
+            for (int i = 0; i < Clients.Count; i++)
+            {
+                names[i] = Clients[i].UserName;
+            }
+            Color[] colors = new Color[Clients.Count];
+            for (int i = 0; i < Clients.Count; i++)
+            {
+                colors[i] = Clients[i].UserColor;
+            }
+            Map = new MapData(names, colors);
+            GameTimer.Start();
         }
     }
     #region Class EventList
