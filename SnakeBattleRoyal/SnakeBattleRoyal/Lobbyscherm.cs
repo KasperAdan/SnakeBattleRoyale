@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -79,6 +80,14 @@ namespace SnakeBattleRoyal
                         Debug.WriteLine(packetData[1]);
                     break;
                 case "users":
+                    JObject json = JObject.Parse(packetData[1]);
+                    int userAmount = (int)json["userAmount"];
+                    for (int i = 0; i < userAmount; i++)
+                    {
+                        string name = (string)json["data"][i]["username"];
+                        Color color = Color.FromArgb((int)(json["data"][i]["color"]));
+                        //add user to clientlist
+                    }
                     break;
                 //update users 
                 default:

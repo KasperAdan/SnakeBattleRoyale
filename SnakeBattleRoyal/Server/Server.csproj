@@ -9,4 +9,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
+  <Import Project="..\SharedMap\SharedMap.projitems" Label="Shared" />
+
 </Project>

@@ -5,9 +5,19 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnakeBattleRoyal", "SnakeBattleRoyal\SnakeBattleRoyal.csproj", "{47F33C44-DB45-4F6B-8593-56F20E9F8699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{90D6D057-A880-48BF-9C6B-B483421FA126}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{90D6D057-A880-48BF-9C6B-B483421FA126}"
+	ProjectSection(ProjectDependencies) = postProject
+		{47F33C44-DB45-4F6B-8593-56F20E9F8699} = {47F33C44-DB45-4F6B-8593-56F20E9F8699}
+	EndProjectSection
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedMap", "SharedMap\SharedMap.shproj", "{E62DA776-72E5-436E-816E-FB6D08B2280B}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedMap\SharedMap.projitems*{47f33c44-db45-4f6b-8593-56f20e9f8699}*SharedItemsImports = 4
+		SharedMap\SharedMap.projitems*{90d6d057-a880-48bf-9c6b-b483421fa126}*SharedItemsImports = 5
+		SharedMap\SharedMap.projitems*{e62da776-72e5-436e-816e-fb6d08b2280b}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
