@@ -119,7 +119,7 @@ namespace SnakeBattleRoyal
                 case "map":
                     string mapJson = packetData[1];
                     Tiles[,] map = JsonConvert.DeserializeObject<Tiles[,]>(packetData[1]);
-                    if (this.InvokeRequired)
+                    if (GameForm.InvokeRequired)
                     {
                         Invoke(new MethodInvoker(delegate ()
                         {
@@ -133,6 +133,7 @@ namespace SnakeBattleRoyal
                     break;
                 case "players":
                     string playerJson = packetData[1];
+                    GameForm.UpdatePlayers(playerJson);
                     break;
                 default:
                     Debug.WriteLine("Did not understand: " + packetData[0]);

@@ -13,6 +13,7 @@ namespace SharedMap
         public Direction direction;
         public List<Vector2> body;
         public Color color;
+        public Direction previousMove = Direction.NONE;
 
         public Snake(string name, List<Vector2> body, Color color)
         {
@@ -27,6 +28,7 @@ namespace SharedMap
         {
             int newHeadX = (int)body[0].X;
             int newHeadY = (int)body[0].Y;
+            previousMove = direction;
             switch (direction)
             {
                 case Direction.UP:
@@ -45,7 +47,7 @@ namespace SharedMap
                     return;
             }
 
-            if (newHeadX < 0 || newHeadX >= MapData.COLUMNS || newHeadY < 0 || newHeadY >= MapData.ROWS)
+            if (newHeadX < 0 || newHeadX >= MapData.ROWS || newHeadY < 0 || newHeadY >= MapData.COLUMNS)
             {
                 alive = false;
             }
@@ -91,6 +93,8 @@ namespace SharedMap
                             newBody.Add(new Vector2(body[i].X, body[i].Y));
                         }
                         body = newBody;
+                        MapData.Apples.Remove(new Point(newHeadX, newHeadY));
+                        MapData.AddApple();
                         break;
                 }
             }

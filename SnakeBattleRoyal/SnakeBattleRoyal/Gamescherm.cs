@@ -1,4 +1,5 @@
-﻿using SharedMap;
+﻿using Newtonsoft.Json.Linq;
+using SharedMap;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net.Sockets;
@@ -16,6 +17,12 @@ namespace SnakeBattleRoyal
         //private string totalBuffer;
         private int screenWidth;
         private int screenHeight;
+        private static Timer GameTimer;
+
+        private string[] Names;
+        private int[] Scores;
+        private bool[] Alive;
+        private Color[] Colors;
 
         public Gamescherm(string username, Color userColor/*, TcpClient client, NetworkStream stream*/)
         {
@@ -31,6 +38,37 @@ namespace SnakeBattleRoyal
             screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
             screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
             this.Size = new Size(screenWidth, screenHeight);
+            //if ()
+            //{
+            //    this.Hide();
+            //    var form2 = new Scorescherm();
+            //    form2.Closed += (s, args) => this.Close();
+            //    form2.Show();
+            //}
+        }
+
+        internal void UpdatePlayers(string jsonString)
+        {
+            JObject json = JObject.Parse(jsonString);
+            int snakeAmount = (int)json["amount"];
+
+            Names = new string[snakeAmount];
+            Scores = new int[snakeAmount];
+            Alive = new bool[snakeAmount];
+            Colors = new Color[snakeAmount];
+
+            for (int i = 0; i < snakeAmount; i++)
+            {
+                string name = (string)json["players"][i]["username"];
+                int score = (int)json["players"][i]["score"];
+                bool alive = (bool)json["players"][i]["alive"];
+                Color color = Color.FromArgb((int)(json["players"][i]["color"]));
+
+                Names[i] = name;
+                Scores[i] = score;
+                Alive[i] = alive;
+                Colors[i] = color;
+            }
         }
 
         //private void OnRead(IAsyncResult ar)
@@ -62,7 +100,7 @@ namespace SnakeBattleRoyal
 
         //    switch (packetData[0])
         //    {
-                
+
         //        default:
         //            Debug.WriteLine("Did not understand: " + packetData[0]);
         //            break;
@@ -109,16 +147,77 @@ namespace SnakeBattleRoyal
                     }
                     else if (tile.ToString().Contains("Head"))
                     {
-                        CustomLabel piece = new CustomLabel(i*tileWidth, j*tileHeight, tileWidth, tileHeight, Color.Pink);
+                        CustomLabel piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Color.Black, true);
+
+                        switch (tile)
+                        {
+                            case Tiles.HeadPlayer1:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[0], true);
+                                break;
+                            case Tiles.HeadPlayer2:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[1], true);
+                                break;
+                            case Tiles.HeadPlayer3:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[2], true);
+                                break;
+                            case Tiles.HeadPlayer4:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[3], true);
+                                break;
+                            case Tiles.HeadPlayer5:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[4], true);
+                                break;
+                            case Tiles.HeadPlayer6:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[5], true);
+                                break;
+                            case Tiles.HeadPlayer7:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[6], true);
+                                break;
+                            case Tiles.HeadPlayer8:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[7], true);
+                                break;
+                        }
                         this.Controls.Add(piece);
                     }
                     else if (tile.ToString().Contains("Body"))
                     {
-                        CustomLabel piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Color.Purple); 
+                        CustomLabel piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Color.Black, false);
+
+                        switch (tile)
+                        {
+                            case Tiles.BodyPlayer1:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[0], false);
+                                break;
+                            case Tiles.BodyPlayer2:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[1], false);
+                                break;
+                            case Tiles.BodyPlayer3:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[2], false);
+                                break;
+                            case Tiles.BodyPlayer4:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[3], false);
+                                break;
+                            case Tiles.BodyPlayer5:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[4], false);
+                                break;
+                            case Tiles.BodyPlayer6:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[5], false);
+                                break;
+                            case Tiles.BodyPlayer7:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[6], false);
+                                break;
+                            case Tiles.BodyPlayer8:
+                                piece = new CustomLabel(i * tileWidth, j * tileHeight, tileWidth, tileHeight, Colors[7], false);
+                                break;
+                        }
+                        this.Controls.Add(piece);
+                    }
+                    else if (tile == Tiles.Apple)
+                    {
+                        CustomLabel piece = new CustomLabel(i * tileWidth, j *tileHeight, tileWidth, tileHeight, Color.Red, true);
                         this.Controls.Add(piece);
                     }
                 }
-                
+ 
             }
         }
     }

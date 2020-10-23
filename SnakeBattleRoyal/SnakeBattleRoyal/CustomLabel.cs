@@ -10,11 +10,18 @@ namespace SnakeBattleRoyal
 {
     class CustomLabel : Label
     {
-        public CustomLabel(int x, int y, int width, int height, Color color)
+        public CustomLabel(int x, int y, int width, int height, Color color, bool opaque)
         {
             Location = new Point(y, x);
             Size = new Size(width, height);
-            BackColor = color;
+            if (!opaque)
+            {
+                BackColor = Color.FromArgb(128, color);
+            }
+            else
+            {
+                BackColor = color;
+            }
             Enabled = false;
         }    
     }

@@ -15,8 +15,9 @@ namespace SharedMap
         public static readonly int COLUMNS = 80;
         public static readonly int ROWS = 45;
 
-        private Tiles[,] Map;
+        public static Tiles[,] Map;
         private Snake[] Snakes;
+        public static List<Point> Apples = new List<Point>();
 
         public MapData(string[] names, Color[] colors)
         {
@@ -35,6 +36,11 @@ namespace SharedMap
                 Snakes[i] = new Snake(names[i], GetStartPositions(i), colors[i]);
             }
             UpdateMap();
+            for (int i = 0; i < names.Count() * 3; i++)
+            {
+                AddApple();
+            }
+            UpdateMap();
         }
 
         public MapData(string json)
@@ -48,7 +54,50 @@ namespace SharedMap
             {
                 if (snake.name == playerName)
                 {
-                    snake.direction = newDirection;
+                    
+                    if (snake.previousMove == Direction.NONE)
+                    {
+                        if (snake.body[1].Y > snake.body[0].Y && newDirection != Direction.RIGHT)
+                        {
+                            snake.direction = newDirection;
+                        }
+                        else if (snake.body[1].Y < snake.body[0].Y && newDirection != Direction.LEFT)
+                        {
+                            snake.direction = newDirection;
+                        }
+                    }
+                    else
+                    {
+                        switch (newDirection)
+                        {
+                            case Direction.UP:
+                                if (snake.previousMove != Direction.DOWN)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.RIGHT:
+                                if (snake.previousMove != Direction.LEFT)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.DOWN:
+                                if (snake.previousMove != Direction.UP)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.LEFT:
+                                if (snake.previousMove != Direction.RIGHT)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.NONE:
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -100,6 +149,12 @@ namespace SharedMap
                     }
                 }
             }
+
+            //Add apples
+            foreach (var apple in Apples)
+            {
+                Map[apple.X, apple.Y] = Tiles.Apple;
+            }
         }
 
         public string GetMapJson()
@@ -111,14 +166,33 @@ namespace SharedMap
         {
             JObject playerJson =
                 new JObject(
-                    new JProperty("Players",
+                    new JProperty("amount", Snakes.Count()),
+                    new JProperty("players",
                     new JArray(from s in Snakes
                                select
                                      new JObject(
                                          new JProperty("username", s.name),
-                                         new JProperty("alive", s.alive)))));
+                                         new JProperty("alive", s.alive),
+                                         new JProperty("score", s.body.Count),
+                                         new JProperty("color", s.color.ToArgb())))));
 
             return playerJson.ToString(Formatting.None);
+        }
+
+        public static void AddApple()
+        {
+            Random random = new Random();
+            while (true)
+            {
+                int x = random.Next(ROWS);
+                int y = random.Next(COLUMNS);
+
+                if (Map[x, y] == Tiles.Empty)
+                {
+                    Apples.Add(new Point(x, y));
+                    return;
+                }
+            }
         }
 
         public void PrintMap()
@@ -204,5 +278,6 @@ namespace SharedMap
                     return new List<Vector2> { };
             }
         }
+
     }
 }

@@ -30,7 +30,7 @@ namespace Server
             GameTimer = new Timer();
             GameTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             // Set the Interval to 1000 millisecond. (Time is set in Milliseconds)
-            GameTimer.Interval = 1000;
+            GameTimer.Interval = 100;
             GameTimer.Enabled = false;
 
             Console.ReadLine();
@@ -130,7 +130,10 @@ namespace Server
                 colors[i] = Clients[i].UserColor;
             }
             Map = new MapData(names, colors);
+
             GameTimer.Start();
+            string playerJson = Map.GetPlayerJson();
+            Broadcast($"players\r\n{playerJson}");
         }
     }
     #region Class EventList
