@@ -2,19 +2,12 @@
 using SharedMap;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net.Sockets;
 using System.Windows.Forms;
 
 namespace SnakeBattleRoyal
 {
     public partial class Gamescherm : Form
     {
-        private string Username;
-        private Color UserColor;
-        //private TcpClient Client;
-        //private NetworkStream Stream;
-        //private byte[] buffer = new byte[1024];
-        //private string totalBuffer;
         private int screenWidth;
         private int screenHeight;
 
@@ -24,27 +17,12 @@ namespace SnakeBattleRoyal
         private Color[] Colors;
         private bool scoresShowed = false;
 
-        public Gamescherm(string username, Color userColor/*, TcpClient client, NetworkStream stream*/)
+        public Gamescherm()
         {
             InitializeComponent();
-
-            Username = username;
-            UserColor = userColor;
-            //Client = client;
-            //Stream = stream;
-
-            //Stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
-
             screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
             screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
             this.Size = new Size(screenWidth, screenHeight);
-            //if ()
-            //{
-            //    this.Hide();
-            //    var form2 = new Scorescherm();
-            //    form2.Closed += (s, args) => this.Close();
-            //    form2.Show();
-            //}
         }
 
         internal void UpdatePlayers(string jsonString)

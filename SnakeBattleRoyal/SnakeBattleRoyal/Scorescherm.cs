@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.SymbolStore;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SnakeBattleRoyal
 {
     public partial class Scorescherm : Form
     {
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "highscorefile.txt");
         public Scorescherm(string[] names, int[] scores, Color[] colors)
         {
             InitializeComponent();
@@ -29,7 +25,6 @@ namespace SnakeBattleRoyal
 
         private List<Label> SortScores(string[] names, int[] scores, Color[] colors)
         {
-            string path = @"c:\temp\MyTest.txt";
             int[] Scores = scores;
             List<Label> labels = new List<Label>();
             for (int j = 0; j < names.Length; j++)
@@ -46,7 +41,7 @@ namespace SnakeBattleRoyal
                 } 
                 Label label = new Label();
                 label.Text = names[highestIndex] + " - " + Scores[highestIndex];
-                label.Top = (labels.Count * 30) + 30;
+                label.Top = (labels.Count * 30) + 50;
                 label.Left = 15;
                 label.ForeColor = colors[highestIndex];
                 labels.Add(label);
@@ -82,7 +77,6 @@ namespace SnakeBattleRoyal
         private void HighScores()
         {
             List<KeyValuePair<string, int>> dict = new List<KeyValuePair<string, int>>();
-            string path = @"c:\temp\MyTest.txt";
             using (StreamReader sr = File.OpenText(path))
             {
                 string s = "";
@@ -96,11 +90,11 @@ namespace SnakeBattleRoyal
                 }
                 List<KeyValuePair<string,int>> sortedList = dict.OrderBy(x => x.Value).ToList();
                 sortedList.Reverse();
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < Math.Min(10,sortedList.Count); i++)
                 {
                     Label label = new Label();
                     label.Text = sortedList[i].Key + " " + sortedList[i].Value;
-                    label.Top = (i * 30) + 75;
+                    label.Top = (i * 30) + 50;
                     label.Left = 700;
                     this.Controls.Add(label);
                 }

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SnakeBattleRoyal
@@ -41,7 +35,7 @@ namespace SnakeBattleRoyal
             Button btn = sender as Button;
             btn.FlatAppearance.BorderColor = Color.Empty;
         }
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void SettingsLogo_Click(object sender, EventArgs e)
         {
             var form3 = new Settingscherm();
             form3.Show(this);
