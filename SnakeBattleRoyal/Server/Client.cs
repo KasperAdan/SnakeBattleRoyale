@@ -21,10 +21,11 @@ namespace Server
         private byte[] buffer = new byte[1024];
         private string totalBuffer = "";
 
-        public Client(TcpClient tcpClient)
+        public Client(TcpClient tcpClient, Color color)
         {
             this.tcpClient = tcpClient;
             this.stream = this.tcpClient.GetStream();
+            UserColor = color;
             this.stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
         }
 
@@ -51,7 +52,6 @@ namespace Server
             {
                 case "connect":
                     this.UserName = packetData[1];
-                    this.UserColor = Color.FromArgb(int.Parse(packetData[2]));
                     Console.WriteLine($"User {this.UserName} is connected");
                     Write("connect\r\nok");
                     break;
@@ -75,4 +75,4 @@ namespace Server
             stream.Flush();
         }
     }
-}   
+}

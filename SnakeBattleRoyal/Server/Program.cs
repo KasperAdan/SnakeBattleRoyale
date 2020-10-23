@@ -56,10 +56,11 @@ namespace Server
 
         private static void OnConnect(IAsyncResult ar)
         {
+            Color[] COLORS = new Color[] { Color.DarkCyan, Color.DarkGreen, Color.LightGreen, Color.Purple, Color.Orange, Color.Blue, Color.Pink, Color.Yellow };
             var tcpClient = Listener.EndAcceptTcpClient(ar);
             Console.WriteLine($"Client connected from {tcpClient.Client.RemoteEndPoint}");
             //check if the client already excists
-            Clients.Add(new Client(tcpClient));
+            Clients.Add(new Client(tcpClient, COLORS[Clients.Count]));
             Listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
         }
 

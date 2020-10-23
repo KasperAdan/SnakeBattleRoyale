@@ -162,11 +162,11 @@ namespace SnakeBattleRoyal
             for (int i = 0; i < names.Count(); i++)
             {
                 Label playerName = new Label();
-                playerName.Top = A * 28;
-                playerName.Left = 15;
+                playerName.Top = A * 30;
+                playerName.Left = 350;
                 playerName.Text = names[i];
                 playerName.ForeColor = colors[i];
-                A = A + 1;
+                A++;
                 this.Controls.Add(playerName);
             }
         }
