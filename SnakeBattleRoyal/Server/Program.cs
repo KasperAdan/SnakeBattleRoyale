@@ -17,6 +17,7 @@ namespace Server
         private static EventList<Client> Clients = new EventList<Client>();
         public static MapData Map;
         private static Timer GameTimer;
+        
 
         static void Main(string[] args)
         {
@@ -56,7 +57,7 @@ namespace Server
 
         private static void OnConnect(IAsyncResult ar)
         {
-            Color[] COLORS = new Color[] { Color.DarkCyan, Color.DarkGreen, Color.LightGreen, Color.Purple, Color.Orange, Color.Blue, Color.Pink, Color.Yellow };
+            Color[] COLORS = new Color[] { Color.Aqua, Color.DarkGreen, Color.LightGreen, Color.Purple, Color.Orange, Color.Blue, Color.Pink, Color.Yellow };
             var tcpClient = Listener.EndAcceptTcpClient(ar);
             Console.WriteLine($"Client connected from {tcpClient.Client.RemoteEndPoint}");
             //check if the client already excists

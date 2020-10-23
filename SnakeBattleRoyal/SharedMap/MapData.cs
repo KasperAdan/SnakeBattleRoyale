@@ -36,9 +36,12 @@ namespace SharedMap
                 Snakes[i] = new Snake(names[i], GetStartPositions(i), colors[i]);
             }
             UpdateMap();
-            for (int i = 0; i < names.Count() * 3; i++)
-            {
-                AddApple();
+            for (int i = 0; i < names.Count() * 3; i++)
+
+            {
+
+                AddApple();
+
             }
             UpdateMap();
         }
