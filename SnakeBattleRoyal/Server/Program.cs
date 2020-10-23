@@ -2,7 +2,6 @@
 using SharedMap;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -47,12 +46,12 @@ namespace Server
             if (playerDied)
             {
                 string playerJson = Map.GetPlayerJson();
-                //Broadcast($"players\r\n{playerJson}");
+                Broadcast($"players\r\n{playerJson}");
             }
             Map.UpdateMap();
             string mapJson = Map.GetMapJson();
             Broadcast($"map\r\n{mapJson}");
-            Map.PrintMap();
+            //Map.PrintMap();
         }
 
         private static void OnConnect(IAsyncResult ar)
@@ -130,7 +129,6 @@ namespace Server
                 colors[i] = Clients[i].UserColor;
             }
             Map = new MapData(names, colors);
-
             GameTimer.Start();
             string playerJson = Map.GetPlayerJson();
             Broadcast($"players\r\n{playerJson}");

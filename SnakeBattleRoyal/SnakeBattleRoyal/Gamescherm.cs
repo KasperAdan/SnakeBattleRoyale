@@ -22,6 +22,7 @@ namespace SnakeBattleRoyal
         private int[] Scores;
         private bool[] Alive;
         private Color[] Colors;
+        private bool scoresShowed = false;
 
         public Gamescherm(string username, Color userColor/*, TcpClient client, NetworkStream stream*/)
         {
@@ -55,6 +56,7 @@ namespace SnakeBattleRoyal
             Scores = new int[snakeAmount];
             Alive = new bool[snakeAmount];
             Colors = new Color[snakeAmount];
+            int playersAlive = 0;
 
             for (int i = 0; i < snakeAmount; i++)
             {
@@ -67,44 +69,35 @@ namespace SnakeBattleRoyal
                 Scores[i] = score;
                 Alive[i] = alive;
                 Colors[i] = color;
+
+                if (alive)
+                {
+                    playersAlive++;
+                }
+            }
+            if (playersAlive < 2 && !scoresShowed)
+            {
+                scoresShowed = true;
+                if (this.InvokeRequired)
+                {
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        this.Hide();
+                        Scorescherm scorescherm = new Scorescherm(Names, Scores, Colors);
+                        scorescherm.Closed += (s, args) => this.Close();
+                        scorescherm.Show();
+                    }));
+                }
+                else
+                {
+                    this.Hide();
+                    Scorescherm scorescherm = new Scorescherm(Names, Scores, Colors);
+                    scorescherm.Closed += (s, args) => this.Close();
+                    scorescherm.Show();
+                }
+                
             }
         }
-
-        //private void OnRead(IAsyncResult ar)
-        //{
-        //    int receivedBytes = Stream.EndRead(ar);
-        //    string receivedText = Encoding.ASCII.GetString(buffer, 0, receivedBytes);
-        //    this.totalBuffer += receivedText;
-
-        //    while (totalBuffer.Contains("\r\n\r\n"))
-        //    {
-        //        string packet = totalBuffer.Substring(0, totalBuffer.IndexOf("\r\n\r\n"));
-        //        totalBuffer = totalBuffer.Substring(totalBuffer.IndexOf("\r\n\r\n") + 4);
-        //        string[] packetData = Regex.Split(packet, "\r\n");
-        //        HandleData(packetData);
-        //    }
-        //    Stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
-        //}
-
-        //private void Write(string data)
-        //{
-        //    var dataAsBytes = Encoding.ASCII.GetBytes(data + "\r\n\r\n");
-        //    Stream.Write(dataAsBytes, 0, dataAsBytes.Length);
-        //    Stream.Flush();
-        //}
-
-        //private void HandleData(string[] packetData)
-        //{
-        //    Debug.WriteLine($"Packet ontvangen: {packetData[0]}");
-
-        //    switch (packetData[0])
-        //    {
-
-        //        default:
-        //            Debug.WriteLine("Did not understand: " + packetData[0]);
-        //            break;
-        //    }
-        //}
 
         private void Gamescherm_KeyPress(object sender, KeyPressEventArgs e)
         {

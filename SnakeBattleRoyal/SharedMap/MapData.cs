@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -41,6 +41,9 @@ namespace SharedMap
                 AddApple();
             }
             UpdateMap();
+        }
+
+        public MapData(string json)
         }
 
         public MapData(string json)
@@ -145,15 +148,61 @@ namespace SharedMap
                         else
                         {
                             Map[(int)snake.body[i].X, (int)snake.body[i].Y] = (Tiles)Enum.Parse(typeof(Tiles), $"BodyPlayer{j + 1}");
+        public bool UpdateSnakes()
+        {
+            bool playerDied = false;
+            foreach (var snake in Snakes)
+            {
+                if (snake.alive)
+                {
+                    snake.Update(Map);
+                    if (!snake.alive)
+                    {
+                        playerDied = true;
+                    }
+                }
+            }
+            return playerDied;
+        }
+
+        public void UpdateMap()
+        {
+            //Clear map
+            for (int i = 0; i < ROWS; i++)
+            {
+                for (int j = 0; j < COLUMNS; j++)
+                {
+                    Map[i, j] = Tiles.Empty;
+                }
+            }
+
+            //fill map
+            for (int j = 0; j < Snakes.Count(); j++)
+            {
+                Snake snake = Snakes[j];
+                if (snake.alive)
+                {
+                    for (int i = 0; i < snake.body.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            Map[(int)snake.body[i].X, (int)snake.body[i].Y] = (Tiles)Enum.Parse(typeof(Tiles), $"HeadPlayer{j + 1}");
+                        }
+                        else
+                        {
+                            Map[(int)snake.body[i].X, (int)snake.body[i].Y] = (Tiles)Enum.Parse(typeof(Tiles), $"BodyPlayer{j + 1}");
                         }
                     }
                 }
             }
 
             //Add apples
-            foreach (var apple in Apples)
-            {
-                Map[apple.X, apple.Y] = Tiles.Apple;
+            foreach (var apple in Apples)
+
+            {
+
+                Map[apple.X, apple.Y] = Tiles.Apple;
+
             }
         }
 
@@ -162,37 +211,66 @@ namespace SharedMap
             return JsonConvert.SerializeObject(Map);
         }
 
-        public string GetPlayerJson()
-        {
-            JObject playerJson =
-                new JObject(
-                    new JProperty("amount", Snakes.Count()),
-                    new JProperty("players",
-                    new JArray(from s in Snakes
-                               select
-                                     new JObject(
-                                         new JProperty("username", s.name),
-                                         new JProperty("alive", s.alive),
-                                         new JProperty("score", s.body.Count),
-                                         new JProperty("color", s.color.ToArgb())))));
-
-            return playerJson.ToString(Formatting.None);
+        public string GetPlayerJson()
+
+        {
+
+            JObject playerJson =
+
+                new JObject(
+
+                    new JProperty("amount", Snakes.Count()),
+
+                    new JProperty("players",
+
+                    new JArray(from s in Snakes
+
+                               select
+
+                                     new JObject(
+
+                                         new JProperty("username", s.name),
+
+                                         new JProperty("alive", s.alive),
+
+                                         new JProperty("score", s.body.Count),
+
+                                         new JProperty("color", s.color.ToArgb())))));
+
+
+
+            return playerJson.ToString(Formatting.None);
+
         }
 
-        public static void AddApple()
-        {
-            Random random = new Random();
-            while (true)
-            {
-                int x = random.Next(ROWS);
-                int y = random.Next(COLUMNS);
-
-                if (Map[x, y] == Tiles.Empty)
-                {
-                    Apples.Add(new Point(x, y));
-                    return;
-                }
-            }
+        public static void AddApple()
+
+        {
+
+            Random random = new Random();
+
+            while (true)
+
+            {
+
+                int x = random.Next(ROWS);
+
+                int y = random.Next(COLUMNS);
+
+
+
+                if (Map[x, y] == Tiles.Empty)
+
+                {
+
+                    Apples.Add(new Point(x, y));
+
+                    return;
+
+                }
+
+            }
+
         }
 
         public void PrintMap()
