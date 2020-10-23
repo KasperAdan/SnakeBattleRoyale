@@ -56,6 +56,9 @@
     <Compile Include="Beginscherm.Designer.cs">
       <DependentUpon>Beginscherm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Gamescherm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -42,10 +42,10 @@ namespace SharedMap
                     newHeadY = (int)body[0].Y - 1;
                     break;
                 case Direction.NONE:
-                    break;
+                    return;
             }
 
-            if (newHeadX < 0 || newHeadX > MapData.COLUMNS || newHeadY < 0 || newHeadY > MapData.ROWS)
+            if (newHeadX < 0 || newHeadX >= MapData.COLUMNS || newHeadY < 0 || newHeadY >= MapData.ROWS)
             {
                 alive = false;
             }
@@ -58,10 +58,11 @@ namespace SharedMap
                 {
                     case Tiles.Empty:
                         newBody.Add(new Vector2(newHeadX, newHeadY));
-                        for (int i = 0; i < body.Count-2; i++)
+                        for (int i = 0; i < body.Count-1; i++)
                         {
                             newBody.Add(new Vector2(body[i].X, body[i].Y));
                         }
+                        body = newBody;
                         break;
                     case Tiles.HeadPlayer1:
                     case Tiles.HeadPlayer2:
@@ -85,10 +86,11 @@ namespace SharedMap
                         break;
                     case Tiles.Apple:
                         newBody.Add(new Vector2(newHeadX, newHeadY));
-                        for (int i = 0; i < body.Count - 1; i++)
+                        for (int i = 0; i < body.Count; i++)
                         {
                             newBody.Add(new Vector2(body[i].X, body[i].Y));
                         }
+                        body = newBody;
                         break;
                 }
             }

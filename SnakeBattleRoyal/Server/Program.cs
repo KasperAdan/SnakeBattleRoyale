@@ -29,8 +29,8 @@ namespace Server
 
             GameTimer = new Timer();
             GameTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            // Set the Interval to 500 millisecond. (Time is set in Milliseconds)
-            GameTimer.Interval = 500;
+            // Set the Interval to 1000 millisecond. (Time is set in Milliseconds)
+            GameTimer.Interval = 1000;
             GameTimer.Enabled = false;
 
             Console.ReadLine();
@@ -47,11 +47,12 @@ namespace Server
             if (playerDied)
             {
                 string playerJson = Map.GetPlayerJson();
-                Broadcast($"players\r\n{playerJson}");
+                //Broadcast($"players\r\n{playerJson}");
             }
             Map.UpdateMap();
             string mapJson = Map.GetMapJson();
             Broadcast($"map\r\n{mapJson}");
+            Map.PrintMap();
         }
 
         private static void OnConnect(IAsyncResult ar)
@@ -104,6 +105,10 @@ namespace Server
 
         internal static void InitilizeGame()
         {
+            if (Clients.Count < 2)
+            {
+                return;
+            }
             foreach (var client in Clients)
             {
                 if (!client.ready)

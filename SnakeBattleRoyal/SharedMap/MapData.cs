@@ -140,7 +140,6 @@ namespace SharedMap
             }
         }
     
-
         private List<Vector2> GetStartPositions(int player)
         {
             switch (player + 1)

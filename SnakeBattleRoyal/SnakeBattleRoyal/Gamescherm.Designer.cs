@@ -44,6 +44,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gamescherm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Gamescherm_KeyPress);
             this.ResumeLayout(false);
 
         }
