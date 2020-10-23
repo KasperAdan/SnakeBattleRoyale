@@ -6,7 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace Server
 {
@@ -25,11 +27,12 @@ namespace Server
             Listener = new TcpListener(IPAddress.Any, 7777);
             Clients.OnChange += new EventHandler(Clients_OnChange);
             Listener.Start();
-            Listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+            Thread t = new Thread(OnConnect);
+            t.Start();
 
             GameTimer = new Timer();
             GameTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            // Set the Interval to 500 millisecond. (Time is set in Milliseconds)
+            // Set the Interval to 100 millisecond. (Time is set in Milliseconds)
             GameTimer.Interval = 100;
             GameTimer.Enabled = false;
 
@@ -48,6 +51,19 @@ namespace Server
             {
                 string playerJson = Map.GetPlayerJson();
                 Broadcast($"players\r\n{playerJson}");
+
+                int alive = 0;
+                foreach (Snake snake in Map.Snakes)
+                {
+                    if (snake.alive)
+                    {
+                        alive++;
+                    }
+                }
+                if (alive < 2)
+                {
+                    GameTimer.Stop();
+                }
             }
             Map.UpdateMap();
             string mapJson = Map.GetMapJson();
@@ -55,14 +71,15 @@ namespace Server
             //Map.PrintMap();
         }
 
-        private static void OnConnect(IAsyncResult ar)
+        private static void OnConnect()
         {
             Color[] COLORS = new Color[] { Color.Aqua, Color.DarkGreen, Color.LightGreen, Color.Purple, Color.Orange, Color.Blue, Color.Pink, Color.Yellow };
-            var tcpClient = Listener.EndAcceptTcpClient(ar);
-            Console.WriteLine($"Client connected from {tcpClient.Client.RemoteEndPoint}");
-            //check if the client already excists
-            Clients.Add(new Client(tcpClient, COLORS[Clients.Count]));
-            Listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+            while (Clients.Count < 9)
+            {
+                var tcpClient = Listener.AcceptTcpClient();
+                Console.WriteLine($"Client connected from {tcpClient.Client.RemoteEndPoint}");
+                Clients.Add(new Client(tcpClient, COLORS[Clients.Count]));
+            }
         }
 
         internal static void Disconnect(Client client)

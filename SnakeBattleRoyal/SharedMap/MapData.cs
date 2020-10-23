@@ -15,7 +15,7 @@ namespace SharedMap
         public static readonly int ROWS = 45;
 
         public static Tiles[,] Map;
-        private Snake[] Snakes;
+        public Snake[] Snakes;
         public static List<Point> Apples = new List<Point>();
 
         public MapData(string[] names, Color[] colors)
