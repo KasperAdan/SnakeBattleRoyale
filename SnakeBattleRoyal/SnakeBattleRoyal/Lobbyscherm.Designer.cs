@@ -53,9 +53,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Lobbyscherm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Startscherm";
+            this.Text = "Lobby";
             this.ResumeLayout(false);
-
         }
 
         #endregion
