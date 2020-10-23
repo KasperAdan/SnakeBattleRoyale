@@ -47,9 +47,10 @@
             // 
             this.namePlayer.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.namePlayer.BackColor = System.Drawing.SystemColors.Control;
-            this.namePlayer.Location = new System.Drawing.Point(341, 219);
+            this.namePlayer.Location = new System.Drawing.Point(256, 178);
+            this.namePlayer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.namePlayer.Name = "namePlayer";
-            this.namePlayer.Size = new System.Drawing.Size(169, 22);
+            this.namePlayer.Size = new System.Drawing.Size(128, 20);
             this.namePlayer.TabIndex = 0;
             this.namePlayer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.namePlayer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Label_KeyDown);
@@ -58,9 +59,10 @@
             // 
             this.ipHost.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ipHost.BackColor = System.Drawing.SystemColors.Control;
-            this.ipHost.Location = new System.Drawing.Point(341, 245);
+            this.ipHost.Location = new System.Drawing.Point(256, 199);
+            this.ipHost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ipHost.Name = "ipHost";
-            this.ipHost.Size = new System.Drawing.Size(169, 22);
+            this.ipHost.Size = new System.Drawing.Size(128, 20);
             this.ipHost.TabIndex = 1;
             this.ipHost.Text = "localhost";
             this.ipHost.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -69,11 +71,10 @@
             // portHost
             // 
             this.portHost.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.portHost.Location = new System.Drawing.Point(341, 272);
-            this.portHost.Margin = new System.Windows.Forms.Padding(4);
+            this.portHost.Location = new System.Drawing.Point(256, 221);
             this.portHost.Name = "portHost";
             this.portHost.ReadOnly = true;
-            this.portHost.Size = new System.Drawing.Size(169, 22);
+            this.portHost.Size = new System.Drawing.Size(128, 20);
             this.portHost.TabIndex = 2;
             this.portHost.Text = "7777";
             this.portHost.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -84,9 +85,10 @@
             this.connectButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.connectButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.connectButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.connectButton.Location = new System.Drawing.Point(341, 297);
+            this.connectButton.Location = new System.Drawing.Point(256, 241);
+            this.connectButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(171, 28);
+            this.connectButton.Size = new System.Drawing.Size(128, 23);
             this.connectButton.TabIndex = 3;
             this.connectButton.Text = "Connect";
             this.connectButton.UseVisualStyleBackColor = false;
@@ -99,9 +101,10 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(285, 221);
+            this.label1.Location = new System.Drawing.Point(209, 181);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 17);
+            this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Naam:";
             // 
@@ -110,9 +113,10 @@
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(274, 247);
+            this.label2.Location = new System.Drawing.Point(199, 202);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 17);
+            this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "IP Host:";
             // 
@@ -121,9 +125,10 @@
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(293, 274);
+            this.label3.Location = new System.Drawing.Point(218, 224);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 17);
+            this.label3.Size = new System.Drawing.Size(34, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Port:";
             // 
@@ -132,32 +137,32 @@
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox2.Image = global::SnakeBattleRoyal.Properties.Resources.settings;
-            this.pictureBox2.Location = new System.Drawing.Point(734, 12);
+            this.pictureBox2.Location = new System.Drawing.Point(550, 10);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox2.Size = new System.Drawing.Size(40, 40);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 5;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pictureBox2.Click += new System.EventHandler(this.SettingsLogo_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.Image = global::SnakeBattleRoyal.Properties.Resources.snake_icon;
-            this.pictureBox1.Location = new System.Drawing.Point(343, 54);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Location = new System.Drawing.Point(257, 44);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(171, 158);
+            this.pictureBox1.Size = new System.Drawing.Size(128, 128);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
             // Beginscherm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(600, 366);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -169,7 +174,6 @@
             this.Controls.Add(this.namePlayer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Beginscherm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Beginscherm";

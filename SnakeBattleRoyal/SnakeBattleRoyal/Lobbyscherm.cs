@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using SharedMap;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -150,7 +149,7 @@ namespace SnakeBattleRoyal
         private void StartGame()
         {
             this.Hide();
-            GameForm = new Gamescherm(username, userColor/*, client, stream*/);
+            GameForm = new Gamescherm();
             GameForm.Closed += (s, args) => this.Close();
             GameForm.Show();
         }
