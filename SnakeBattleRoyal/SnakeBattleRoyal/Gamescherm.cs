@@ -17,7 +17,6 @@ namespace SnakeBattleRoyal
         //private string totalBuffer;
         private int screenWidth;
         private int screenHeight;
-        private static Timer GameTimer;
 
         private string[] Names;
         private int[] Scores;
@@ -217,7 +216,6 @@ namespace SnakeBattleRoyal
                         this.Controls.Add(piece);
                     }
                 }
- 
             }
         }
     }

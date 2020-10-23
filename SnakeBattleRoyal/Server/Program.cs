@@ -29,8 +29,8 @@ namespace Server
 
             GameTimer = new Timer();
             GameTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            // Set the Interval to 1000 millisecond. (Time is set in Milliseconds)
-            GameTimer.Interval = 100;
+            // Set the Interval to 500 millisecond. (Time is set in Milliseconds)
+            GameTimer.Interval = 500;
             GameTimer.Enabled = false;
 
             Console.ReadLine();

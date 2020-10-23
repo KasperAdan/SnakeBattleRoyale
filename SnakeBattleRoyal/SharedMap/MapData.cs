@@ -36,9 +36,9 @@ namespace SharedMap
                 Snakes[i] = new Snake(names[i], GetStartPositions(i), colors[i]);
             }
             UpdateMap();
-            for (int i = 0; i < names.Count() * 3; i++)
-            {
-                AddApple();
+            for (int i = 0; i < names.Count() * 3; i++)
+            {
+                AddApple();
             }
             UpdateMap();
         }
@@ -54,49 +54,49 @@ namespace SharedMap
             {
                 if (snake.name == playerName)
                 {
-                    
-                    if (snake.previousMove == Direction.NONE)
-                    {
-                        if (snake.body[1].Y > snake.body[0].Y && newDirection != Direction.RIGHT)
-                        {
-                            snake.direction = newDirection;
-                        }
-                        else if (snake.body[1].Y < snake.body[0].Y && newDirection != Direction.LEFT)
-                        {
-                            snake.direction = newDirection;
-                        }
-                    }
-                    else
-                    {
-                        switch (newDirection)
-                        {
-                            case Direction.UP:
-                                if (snake.previousMove != Direction.DOWN)
-                                {
-                                    snake.direction = newDirection;
-                                }
-                                break;
-                            case Direction.RIGHT:
-                                if (snake.previousMove != Direction.LEFT)
-                                {
-                                    snake.direction = newDirection;
-                                }
-                                break;
-                            case Direction.DOWN:
-                                if (snake.previousMove != Direction.UP)
-                                {
-                                    snake.direction = newDirection;
-                                }
-                                break;
-                            case Direction.LEFT:
-                                if (snake.previousMove != Direction.RIGHT)
-                                {
-                                    snake.direction = newDirection;
-                                }
-                                break;
-                            case Direction.NONE:
-                                break;
-                        }
+                    
+                    if (snake.previousMove == Direction.NONE)
+                    {
+                        if (snake.body[1].Y > snake.body[0].Y && newDirection != Direction.RIGHT)
+                        {
+                            snake.direction = newDirection;
+                        }
+                        else if (snake.body[1].Y < snake.body[0].Y && newDirection != Direction.LEFT)
+                        {
+                            snake.direction = newDirection;
+                        }
+                    }
+                    else
+                    {
+                        switch (newDirection)
+                        {
+                            case Direction.UP:
+                                if (snake.previousMove != Direction.DOWN)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.RIGHT:
+                                if (snake.previousMove != Direction.LEFT)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.DOWN:
+                                if (snake.previousMove != Direction.UP)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.LEFT:
+                                if (snake.previousMove != Direction.RIGHT)
+                                {
+                                    snake.direction = newDirection;
+                                }
+                                break;
+                            case Direction.NONE:
+                                break;
+                        }
                     }
                 }
             }
@@ -151,9 +151,9 @@ namespace SharedMap
             }
 
             //Add apples
-            foreach (var apple in Apples)
-            {
-                Map[apple.X, apple.Y] = Tiles.Apple;
+            foreach (var apple in Apples)
+            {
+                Map[apple.X, apple.Y] = Tiles.Apple;
             }
         }
 
@@ -162,37 +162,37 @@ namespace SharedMap
             return JsonConvert.SerializeObject(Map);
         }
 
-        public string GetPlayerJson()
-        {
-            JObject playerJson =
-                new JObject(
-                    new JProperty("amount", Snakes.Count()),
-                    new JProperty("players",
-                    new JArray(from s in Snakes
-                               select
-                                     new JObject(
-                                         new JProperty("username", s.name),
-                                         new JProperty("alive", s.alive),
-                                         new JProperty("score", s.body.Count),
-                                         new JProperty("color", s.color.ToArgb())))));
-
-            return playerJson.ToString(Formatting.None);
+        public string GetPlayerJson()
+        {
+            JObject playerJson =
+                new JObject(
+                    new JProperty("amount", Snakes.Count()),
+                    new JProperty("players",
+                    new JArray(from s in Snakes
+                               select
+                                     new JObject(
+                                         new JProperty("username", s.name),
+                                         new JProperty("alive", s.alive),
+                                         new JProperty("score", s.body.Count),
+                                         new JProperty("color", s.color.ToArgb())))));
+
+            return playerJson.ToString(Formatting.None);
         }
 
-        public static void AddApple()
-        {
-            Random random = new Random();
-            while (true)
-            {
-                int x = random.Next(ROWS);
-                int y = random.Next(COLUMNS);
-
-                if (Map[x, y] == Tiles.Empty)
-                {
-                    Apples.Add(new Point(x, y));
-                    return;
-                }
-            }
+        public static void AddApple()
+        {
+            Random random = new Random();
+            while (true)
+            {
+                int x = random.Next(ROWS);
+                int y = random.Next(COLUMNS);
+
+                if (Map[x, y] == Tiles.Empty)
+                {
+                    Apples.Add(new Point(x, y));
+                    return;
+                }
+            }
         }
 
         public void PrintMap()
