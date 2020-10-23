@@ -53,12 +53,21 @@ namespace SharedMap
             }
         }
 
-        public void UpdateSnakes()
+        public bool UpdateSnakes()
         {
+            bool playerDied = false;
             foreach (var snake in Snakes)
             {
-                snake.Update(Map);
+                if (snake.alive)
+                {
+                    snake.Update(Map);
+                    if (!snake.alive)
+                    {
+                        playerDied = true;
+                    }
+                }
             }
+            return playerDied;
         }
 
         public void UpdateMap()
@@ -96,6 +105,20 @@ namespace SharedMap
         public string GetMapJson()
         {
             return JsonConvert.SerializeObject(Map);
+        }
+
+        public string GetPlayerJson()
+        {
+            JObject playerJson =
+                new JObject(
+                    new JProperty("Players",
+                    new JArray(from s in Snakes
+                               select
+                                     new JObject(
+                                         new JProperty("username", s.name),
+                                         new JProperty("alive", s.alive)))));
+
+            return playerJson.ToString(Formatting.None);
         }
 
         public void PrintMap()

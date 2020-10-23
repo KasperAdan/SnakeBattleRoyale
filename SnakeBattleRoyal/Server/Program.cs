@@ -43,10 +43,15 @@ namespace Server
 
         private static void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            Map.UpdateSnakes();
+            bool playerDied = Map.UpdateSnakes();
+            if (playerDied)
+            {
+                string playerJson = Map.GetPlayerJson();
+                Broadcast($"players\r\n{playerJson}");
+            }
             Map.UpdateMap();
-            string json = Map.GetMapJson();
-            Broadcast($"map\r\n{json}");
+            string mapJson = Map.GetMapJson();
+            Broadcast($"map\r\n{mapJson}");
         }
 
         private static void OnConnect(IAsyncResult ar)

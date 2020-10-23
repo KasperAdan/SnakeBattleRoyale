@@ -69,6 +69,9 @@ namespace SnakeBattleRoyal
                 case "map":
                     string mapJson = packetData[1];
                     break;
+                case "players":
+                    string playerJson = packetData[1];
+                    break;
                 default:
                     Debug.WriteLine("Did not understand: " + packetData[0]);
                     break;
